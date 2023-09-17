@@ -17,6 +17,8 @@ Explain how to determine O complexity and give an explained example of an algori
 
 ## Overview
 
+O complexity
+
 6 coding interview concepts
 - Hash map
 - Recursion
@@ -27,7 +29,7 @@ Explain how to determine O complexity and give an explained example of an algori
 - Heap
 - Quick sort and difference between sorting algorithms (when to use which)
 
-O complexity
+
 
 20 System design concepts
 - see the youtube videofrom NetCode
@@ -502,3 +504,77 @@ console.log(median); // Output: 2.0
 
 ```
 In this example, we find the median of the sorted arrays [1, 3] and [2], which is 2.0.
+
+
+## Sliding window
+
+Sliding window is a common algorithmic technique used to efficiently process and analyze arrays or strings. It involves maintaining a "window" (usually a subarray or substring) of elements within the larger data structure and "slides" it through the data to perform some operation. Sliding window is particularly useful for solving problems that involve finding subarrays or substrings with specific characteristics.
+
+Here's the basic idea of the sliding window technique:
+
+- Initialize two pointers, typically named left and right, to define the window. These pointers represent the start and end of the window, respectively.
+- Expand the window by moving the right pointer to the right (or incrementing it) while a certain condition is met. This condition depends on the problem's requirements.
+- Once the condition is no longer satisfied, start contracting the window by moving the left pointer to the right (or incrementing it) until the condition is satisfied again.
+- Keep track of the optimal solution or perform required operations during the process.
+- Repeat steps 2-4 until the right pointer reaches the end of the data structure.
+
+Sliding window is especially useful for problems that involve finding the longest or shortest subarray/substring, subarrays/substrings with a specific sum, subarrays/substrings with distinct elements, etc.
+
+Now, let's illustrate the sliding window technique by solving the "Longest Substring Without Repeating Characters" problem on LeetCode:
+
+Problem: Longest Substring Without Repeating Characters
+
+Given a string s, find the length of the longest substring without repeating characters.
+
+Here's a JavaScript solution using the sliding window technique:
+
+```javascript
+function lengthOfLongestSubstring(s) {
+  const charSet = new Set(); // To store unique characters in the current window
+  let maxLength = 0;
+  let left = 0; // Start of the current substring
+
+  for (let right = 0; right < s.length; right++) {
+    const char = s[right];
+
+    // If the character is already in the current window, move the left pointer
+    while (charSet.has(char)) {
+      charSet.delete(s[left]);
+      left++;
+    }
+
+    // Add the current character to the window
+    charSet.add(char);
+
+    // Update maxLength if the current substring is longer
+    maxLength = Math.max(maxLength, right - left + 1);
+  }
+
+  return maxLength;
+}
+
+```
+
+Explanation:
+
+- We initialize a Set called charSet to keep track of the unique characters within the current window.
+- We also initialize maxLength to store the length of the longest substring and left to represent the start of the current substring.
+- We iterate through the string s using a sliding window defined by the left and right pointers.
+- At each step, we check if the current character char is already in the charSet. If it is, it means we've encountered a repeating character, so we need to move the left pointer to the right to exclude the repeating character from the window.
+- We keep moving the left pointer until the repeating character is removed from the window, and we update the charSet accordingly.
+- We add the current character char to the window by adding it to the charSet.
+- We update maxLength by comparing it with the length of the current substring (right - left + 1) and taking the maximum value.
+- After processing the entire string, we return maxLength, which represents the length of the longest substring without repeating characters.
+
+Here's an example of how to use this function:
+
+```javascript
+const input = "abcabcbb";
+const length = lengthOfLongestSubstring(input);
+console.log(length); // Output: 3 (The longest substring without repeating characters is "abc.")
+
+```
+
+In this example, the input string "abcabcbb" has the longest substring without repeating characters as "abc," which has a length of 3, so the function returns 3.
+
+
