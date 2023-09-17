@@ -1,11 +1,19 @@
 # Interview Core
 Core algorithms explained for everyone feeling the imposer syndrome.
 
-## Overview
+
 TODO
 
 - Add theory for all concepts
 - Add and am example leetcode problem that is done using the mentioned concept.
+
+Bing question:
+- Whats the most common letcode problem that can be solved with recursion?
+
+OpenAi question:
+- Explain recursion in javascript and show an explained example of reverse linked list letcode problem.
+
+## Overview
 
 6 coding interview concepts
 - Hash map
@@ -105,4 +113,103 @@ Explanation:
 
 Notice
 Try to do the "TwoSum" problem as well.
+
+## Recursion
+
+Recursion is a programming technique where a function calls itself in order to solve a problem. In JavaScript, recursion is a powerful and elegant way to solve complex problems by breaking them down into simpler, similar subproblems. It's important to have base cases or termination conditions in recursive functions to avoid infinite recursion.
+
+Here's the basic structure of a recursive function in JavaScript:
+
+```javascript
+function recursiveFunction(params) {
+  // Base case: check if the recursion should stop
+  if (/* base case condition */) {
+    // Return a value or perform an action
+    return /* some value or action */;
+  }
+
+  // Recursive case: call the function with modified parameters
+  return recursiveFunction(/* modified parameters */);
+}
+
+```
+
+Now, let's explore a LeetCode problem that involves reversing a linked list using recursion:
+
+Problem: Reverse Linked List
+
+Given the head of a singly linked list, reverse the list and return its head.
+
+Here's a solution to this problem using recursion:
+
+```javascript
+class ListNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function reverseLinkedList(head) {
+  // Base case: if the list is empty or has only one node, return the head
+  if (!head || !head.next) {
+    return head;
+  }
+
+  // Recursive case: reverse the rest of the list and attach the current node at the end
+  const reversedHead = reverseLinkedList(head.next);
+
+  // Update the next pointer of the current node to point to its previous node
+  head.next.next = head;
+  head.next = null;
+
+  return reversedHead;
+}
+
+```
+
+Explanation:
+
+- We define a ListNode class to represent the nodes of a singly linked list. Each node has a value (val) and a next pointer that points to the next node in the list.
+- The reverseLinkedList function takes the head of a linked list as its input.
+- In the base case, we check if the list is empty or has only one node. If either condition is met, we return the head as it is already reversed or there is nothing to reverse.
+- In the recursive case, we call the reverseLinkedList function on the rest of the list (i.e., head.next). This recursive call will reverse the remaining part of the list and return the new head of the reversed list.
+- After getting the reversed head, we update the next pointer of the current node (head.next.next) to point to its previous node (head). This effectively reverses the direction of the next pointer for the current node.
+- Finally, we set the next pointer of the current node (head.next) to null to make it the last node in the reversed list and return the reversedHead.
+
+In this way, the linked list is reversed recursively, and the new head of the reversed list is returned.
+
+Here's an example of how to use this function to reverse a linked list:
+
+```javascript
+const head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+head.next.next.next = new ListNode(4);
+head.next.next.next.next = new ListNode(5);
+
+const reversedHead = reverseLinkedList(head);
+
+// Printing the reversed list
+let current = reversedHead;
+while (current !== null) {
+  console.log(current.val);
+  current = current.next;
+}
+
+// Output:
+// 5
+// 4
+// 3
+// 2
+// 1
+```
+
+In this example, we create a linked list with values 1, 2, 3, 4, and 5, and then use the reverseLinkedList function to reverse it. The reversed list is printed in reverse order: 5, 4, 3, 2, 1.
+
+
+
+
+
+
 
