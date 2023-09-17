@@ -11,14 +11,15 @@ Bing question:
 - Whats the most common letcode problem that can be solved with recursion?
 
 OpenAi question:
-- Explain recursion in javascript and show an explained example of reverse linked list letcode problem.
+- Explain recursion in javascript and show an explained example of its ussagee to solve the reverse linked list letcode problem.
 
 ## Overview
 
 6 coding interview concepts
 - Hash map
 - Recursion
-- BFS DFS
+- BFS
+  DFS
 - Binary search
 - Sliding window
 - Heap
@@ -208,8 +209,106 @@ while (current !== null) {
 In this example, we create a linked list with values 1, 2, 3, 4, and 5, and then use the reverseLinkedList function to reverse it. The reversed list is printed in reverse order: 5, 4, 3, 2, 1.
 
 
+## BFS (Breadth-first search)
 
+Breadth-First Search (BFS) is a traversal algorithm used to explore or search through data structures, such as trees and graphs, in a breadthward motion. In the context of binary trees, BFS explores the nodes level by level, starting from the root and moving to the next level only after all nodes at the current level have been visited.
 
+Here's a high-level explanation of how BFS works:
 
+- Begin at the root node of the tree (or the starting point in a graph).
+- Visit the current node.
+- Enqueue (add to a queue) all the children (or neighbors) of the current node.
+- Dequeue the current node (remove it from the queue).
+- Repeat steps 2-4 until the queue is empty, which indicates that all nodes have been visited.
 
+BFS is typically implemented using a queue data structure to keep track of the nodes to be visited. It ensures that nodes at the same level are visited before moving on to the next level, making it suitable for tasks like level order traversal.
 
+Now, let's solve the "Binary Tree Level Order Traversal" problem on LeetCode using BFS:
+
+Problem: Binary Tree Level Order Traversal
+
+Given a binary tree, return its level order traversal as a 2D array.
+
+Here's a JavaScript solution using BFS:
+
+```javascript
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+function levelOrder(root) {
+  if (!root) {
+    return [];
+  }
+
+  const result = [];
+  const queue = [root];
+
+  while (queue.length > 0) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+
+    for (let i = 0; i < levelSize; i++) {
+      const currentNode = queue.shift();
+      currentLevel.push(currentNode.val);
+
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+
+    result.push(currentLevel);
+  }
+
+  return result;
+}
+
+```
+
+Explanation:
+- We define a TreeNode class to represent the nodes of a binary tree. Each node has a val, left, and right property.
+- The levelOrder function takes the root of the binary tree as input.
+- We initialize an empty array result to store the level order traversal and a queue queue to perform BFS.
+- We check if the root is null. If the tree is empty, we return an empty array.
+- We enter a while loop that continues until the queue is empty. Inside the loop:
+  - We get the size of the current level by checking the length of the queue (levelSize).
+  - We create an empty array currentLevel to store the values of nodes at the current level.
+  - We iterate through the nodes at the current level by dequeuing levelSize nodes from the front of the queue. For each dequeued node:
+    - We add its value to currentLevel.
+    - If the node has a left child, we enqueue it.
+    - If the node has a right child, we enqueue it.
+  - After processing all nodes at the current level, we push currentLevel into the result array.
+- Finally, we return the result array, which contains the level order traversal of the binary tree.
+
+Here's an example of how to use this function to perform level order traversal on a binary tree:
+ 
+```javascript
+const root = new TreeNode(3);
+root.left = new TreeNode(9);
+root.right = new TreeNode(20);
+root.right.left = new TreeNode(15);
+root.right.right = new TreeNode(7);
+
+const result = levelOrder(root);
+console.log(result);
+
+```
+The output will be a 2D array representing the level order traversal:
+
+```javascript
+[
+  [3],
+  [9, 20],
+  [15, 7]
+]
+
+```
+This output indicates that the nodes at each level of the binary tree have been traversed in order.
