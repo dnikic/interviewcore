@@ -13,11 +13,11 @@ Bing question:
 OpenAi question:
 - Explain recursion in javascript and show an explained example of its ussagee to solve the reverse linked list letcode problem.
 
-Explain how to determine O complexity and give an explained example of an algorith analisys 
+Explain algorith complexity and it's types, how to determine complexity and give an explained JavaScript example of an algorithm analysis .
 
 ## Overview
 
-O complexity
+Algorithm complexity
 
 6 coding interview concepts
 - Hash map
@@ -49,6 +49,75 @@ O complexity
 SOLID principles from interviewbit
 
 OOP from interviewbit
+
+## Algorith complexity
+
+Algorithm complexity, often referred to as algorithmic complexity or computational complexity, is a measure of the amount of computational resources (such as time and space) required by an algorithm to solve a specific problem. It provides insight into how the algorithm's performance scales with input size. The two main types of algorithm complexity are time complexity and space complexity.
+
+### Time Complexity 
+Time complexity describes how the execution time of an algorithm increases as the size of the input grows. It quantifies the number of basic operations an algorithm performs in relation to the size of the input. Time complexity is often expressed using Big O notation, which provides an upper bound on the growth rate of the running time.
+
+Common time complexities include:
+
+- O(1) - Constant Time: The algorithm's runtime is constant, meaning it takes the same amount of time regardless of the input size.
+- O(log n) - Logarithmic Time: The runtime grows logarithmically with the input size.
+- O(n) - Linear Time: The runtime grows linearly with the input size.
+- O(n log n) - Linearithmic Time: The runtime grows in proportion to n times the logarithm of n.
+- O(n^2) - Quadratic Time: The runtime grows with the square of the input size.
+- O(2^n) - Exponential Time: The runtime grows exponentially with the input size.
+
+### Space Complexity
+
+Space complexity quantifies the amount of memory space an algorithm uses in relation to the input size. It is often measured in terms of auxiliary space, which excludes the input space.
+
+Common space complexities include:
+
+- O(1) - Constant Space: The algorithm uses a fixed amount of memory space regardless of the input size.
+- O(n) - Linear Space: The algorithm's space usage grows linearly with the input size.
+- O(n^2) - Quadratic Space: The algorithm's space usage grows with the square of the input size.
+
+
+
+### Algorithm complexity analysis with a simple JavaScript example
+
+Determining the complexity of an algorithm involves analyzing its code and understanding how the number of operations or memory usage changes as the input size increases. Key steps in determining algorithm complexity include:
+
+- Identify the Input Size: Determine what parameter(s) represent the size of the input to your algorithm. This could be a single variable, an array, or a combination of variables.
+- Count Basic Operations: Analyze your algorithm and count the number of basic operations it performs as a function of the input size. This typically includes arithmetic operations, comparisons, and assignments.
+- Express Complexity: Use appropriate notation (such as Big O notation) to express the algorithm's time and space complexity based on the analysis. Big O notation provides a concise way to describe the upper bounds of complexity.
+
+Problem: Find the Maximum Element in an Array
+
+```javascript
+function findMax(arr) {
+  let max = arr[0]; // Initialize max to the first element of the array
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i]; // Update max if the current element is larger
+    }
+  }
+
+  return max;
+}
+
+
+```
+
+Complexity Analysis:
+
+- Input Size: In this example, the input size is the length of the array, denoted as n.
+- Count Basic Operations:
+  - Initializing max takes a constant amount of time, O(1).
+  - The for loop iterates over the elements of the array once, performing one comparison and one assignment for each element. In the worst case, it performs n - 1 comparisons and assignments.
+  - Returning the max value takes a constant amount of time, O(1).
+- Express Complexity:
+  - The dominant factor in this algorithm is the loop, which performs n - 1 comparisons and assignments. Therefore, the time complexity is O(n).
+  - The algorithm uses a constant amount of additional memory space (for max and loop variables), so the space complexity is O(1).
+
+
+So, the time complexity of the findMax algorithm is O(n), indicating that the number of operations grows linearly with the size of the input array. The space complexity is O(1), indicating constant space usage regardless of the input size.
+
 
 ## 6 coding interview concepts
 
@@ -123,7 +192,7 @@ Explanation:
 Notice
 Try to do the "TwoSum" problem as well.
 
-## Recursion
+### Recursion
 
 Recursion is a programming technique where a function calls itself in order to solve a problem. In JavaScript, recursion is a powerful and elegant way to solve complex problems by breaking them down into simpler, similar subproblems. It's important to have base cases or termination conditions in recursive functions to avoid infinite recursion.
 
@@ -217,7 +286,7 @@ while (current !== null) {
 In this example, we create a linked list with values 1, 2, 3, 4, and 5, and then use the reverseLinkedList function to reverse it. The reversed list is printed in reverse order: 5, 4, 3, 2, 1.
 
 
-## BFS (Breadth-first search)
+### BFS (Breadth-first search)
 
 Breadth-First Search (BFS) is a traversal algorithm used to explore or search through data structures, such as trees and graphs, in a breadthward motion. In the context of binary trees, BFS explores the nodes level by level, starting from the root and moving to the next level only after all nodes at the current level have been visited.
 
@@ -323,7 +392,7 @@ This output indicates that the nodes at each level of the binary tree have been 
 
 
 
-## DFS (Depth first search)
+### DFS (Depth first search)
 
 Depth-First Search (DFS) is a traversal algorithm used to explore or search through data structures, such as trees and graphs, by going as deeply as possible along each branch before backtracking. In the context of trees, DFS starts at the root and explores as far down one branch as possible before backtracking to explore other branches. There are two main variants of DFS: pre-order and post-order traversal.
 
@@ -416,7 +485,7 @@ The output will be an array containing the sum of distances for each node:
 ```
 This output represents the sum of distances between each node and all other nodes in the tree.
 
-## Binary search
+### Binary search
 
 Binary search is a search algorithm used to find a specific target value within a sorted collection, such as an array. It operates by repeatedly dividing the search interval in half until the target value is found or it's determined that the value doesn't exist in the collection. Binary search is efficient and typically much faster than linear search for large sorted datasets.
 
@@ -506,7 +575,7 @@ console.log(median); // Output: 2.0
 In this example, we find the median of the sorted arrays [1, 3] and [2], which is 2.0.
 
 
-## Sliding window
+### Sliding window
 
 Sliding window is a common algorithmic technique used to efficiently process and analyze arrays or strings. It involves maintaining a "window" (usually a subarray or substring) of elements within the larger data structure and "slides" it through the data to perform some operation. Sliding window is particularly useful for solving problems that involve finding subarrays or substrings with specific characteristics.
 
@@ -578,7 +647,7 @@ console.log(length); // Output: 3 (The longest substring without repeating chara
 In this example, the input string "abcabcbb" has the longest substring without repeating characters as "abc," which has a length of 3, so the function returns 3.
 
 
-## Heap
+### Heap
 
 A heap is a specialized tree-based data structure that satisfies the heap property. In a max heap, for example, every parent node has a value greater than or equal to the values of its children nodes. Conversely, in a min heap, every parent node has a value less than or equal to the values of its children nodes. Heaps are often used to efficiently find and remove the maximum (in a max heap) or minimum (in a min heap) element from a collection.
 
