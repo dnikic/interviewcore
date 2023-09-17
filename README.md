@@ -1,25 +1,11 @@
 # Interview Core
-Core algorithms explained for everyone feeling the imposer syndrome.
-
-
-TODO
-
-- Add theory for all concepts
-- Add and am example leetcode problem that is done using the mentioned concept.
-
-Bing question:
-- Whats the most common letcode problem that can be solved with recursion?
-
-OpenAi question:
-- Explain recursion in javascript and show an explained example of its ussagee to solve the reverse linked list letcode problem.
-
-Explain algorith complexity and it's types, how to determine complexity and give an explained JavaScript example of an algorithm analysis .
+Core algorithms explained for everyone feeling the imposer syndrome in the javascript world.
 
 ## Overview
 
 Algorithm complexity
 
-6 coding interview concepts
+Coding interview concepts
 - Hash map
 - Recursion
 - BFS
@@ -36,18 +22,9 @@ SOLID principles from interviewbit
 
 OOP vs Functional javascript principles
 
-8 desigh patterns
-- Factory
-- Builder
-- Singleton
-- Observer
-- Iterator
-- Strategy
-- Adapter
-- Facade
+Ddesigh patterns
 
 20 System design concepts
-- see the youtube videofrom NetCode
 
 
 ## Algorith complexity
@@ -1942,4 +1919,20 @@ Watch: [20 System Design Concepts Explained in 10 Minutes by NetCode](https://ww
 7. **Testing:**
    - Unit tests should be written to test the game logic.
 
+
+
+
+
+## Notest to myself
+
+- Add theory for all concepts
+- Add and am example leetcode problem that is done using the mentioned concept.
+
+Bing question:
+- Whats the most common letcode problem that can be solved with recursion?
+
+OpenAi question:
+- Explain recursion in javascript and show an explained example of its ussagee to solve the reverse linked list letcode problem.
+
+Explain algorith complexity and it's types, how to determine complexity and give an explained JavaScript example of an algorithm analysis .
 
