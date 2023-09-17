@@ -771,3 +771,173 @@ console.log(kthLargest); // Output: 5 (The 2nd largest element in the array is 5
 
 In this example, we find the 2nd largest element in the nums array, which is 5.
 
+
+## Sorting algorithms
+
+You should have an understanding when to use which sorting algorithm, and how they work, but it is not necessary to implement them every time on your own because they are included as method in most programming languages.
+
+### Sorting Algorithms Usage Table
+
+| Use Case    | Recommended Sorting Algorithm |
+| -------- | ------- |
+| Small dataset or nearly sorted data  | Bubble Sort, Insertion Sort    |
+| Medium-sized dataset    | Merge Sort, Quick Sort    |
+| Large dataset where worst-case matters    | Merge Sort, Heap Sort    |
+| Large dataset with many duplicate values    | Quick Sort (with optimization)    |
+
+
+
+| Sorting Algorithm    | Best-Case Time Complexity | Average-Case Time Complexity | Worst-Case Time Complexity | Space Complexity | Stable? |
+| -------- | ------- | ------- | ------- | ------- | ------- |
+| Bubble Sort  | O(n)    | O(n^2)    | O(n^2)    | O(1)    | Yes    |
+| Selection Sort  | O(n^2)    | O(n^2)    | O(n^2)    | O(1)    | No    |
+| Insertion Sort  | O(n)    | O(n^2)    | O(n^2)    | O(1)    | Yes    |
+| Merge Sort  | O(n log n)    | O(n log n)    | O(n log n)    | O(n)    | Yes    |
+| Quick Sort  | O(n log n)    | O(n log n)    | O(n^2)    | O(log n)    | No    |
+| Heap Sort  | O(n log n)    | O(n log n)    | O(n log n)    | O(1)    | No    |
+
+Here's a brief explanation of each column:
+
+- Sorting Algorithm: The name of the sorting algorithm.
+- Best-Case Time Complexity: The minimum number of basic operations required in the best-case scenario (e.g., when the input is already sorted).
+- Average-Case Time Complexity: The expected number of basic operations required on average, assuming random input data.
+- Worst-Case Time Complexity: The maximum number of basic operations required in the worst-case scenario (e.g., when the input is sorted in reverse order).
+- Space Complexity: The amount of additional memory space required by the algorithm, excluding the input data.
+- Stable?: Indicates whether the sorting algorithm preserves the relative order of equal elements. If "Yes," it means that equal elements will maintain their relative order in the sorted output.
+
+### Solving 3Sum Problem Using Sorting
+
+Now, let's use one of these sorting algorithms, such as Quick Sort, to solve the "3Sum" problem on LeetCode.
+
+Problem: 3Sum
+
+Given an array nums of n integers, find all unique triplets in the array that add up to a target sum.
+
+Here's a JavaScript solution using Quick Sort:
+
+```javascript
+function threeSum(nums) {
+  const result = [];
+  nums.sort((a, b) => a - b);
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    if (i === 0 || (i > 0 && nums[i] !== nums[i - 1])) {
+      let lo = i + 1;
+      let hi = nums.length - 1;
+      const target = -nums[i];
+
+      while (lo < hi) {
+        if (nums[lo] + nums[hi] === target) {
+          result.push([nums[i], nums[lo], nums[hi]]);
+          while (lo < hi && nums[lo] === nums[lo + 1]) lo++;
+          while (lo < hi && nums[hi] === nums[hi - 1]) hi--;
+          lo++;
+          hi--;
+        } else if (nums[lo] + nums[hi] < target) {
+          lo++;
+        } else {
+          hi--;
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+```
+
+In this solution, we first sort the input array nums using Quick Sort. Then, we iterate through the sorted array while using two pointers (lo and hi) to find pairs of elements that sum up to the target value. This algorithm takes advantage of the sorted order to efficiently find triplets that add up to zero.
+
+Now you can use the threeSum function to find all unique triplets in an array that sum up to a target value.
+
+### Sorting algorithms javascript implementation
+
+#### Quick Sort
+
+Quick Sort is another divide-and-conquer sorting algorithm. It selects a "pivot" element and partitions the array into two subarrays: one with elements less than the pivot and one with elements greater than the pivot. It then recursively sorts the subarrays.
+
+```javascript
+function quickSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const pivot = arr[arr.length - 1];
+  const left = [];
+  const right = [];
+
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+
+  return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+```
+
+### Merge Sort
+
+Merge Sort is a divide-and-conquer sorting algorithm that divides the input into smaller parts, sorts them, and then merges the sorted parts back together.
+
+```javascript
+function mergeSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const mid = Math.floor(arr.length / 2);
+  const left = arr.slice(0, mid);
+  const right = arr.slice(mid);
+
+  return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+  const result = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      result.push(left[leftIndex]);
+      leftIndex++;
+    } else {
+      result.push(right[rightIndex]);
+      rightIndex++;
+    }
+  }
+
+  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+}
+
+
+```
+
+#### Bubble Sort
+
+Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. It continues to do this until no more swaps are needed, indicating that the list is sorted.
+
+
+```javascript
+function bubbleSort(arr) {
+  const n = arr.length;
+  let swapped;
+  do {
+    swapped = false;
+    for (let i = 0; i < n - 1; i++) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]]; // Swap elements
+        swapped = true;
+      }
+    }
+  } while (swapped);
+  return arr;
+}
+
+````
+
