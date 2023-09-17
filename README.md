@@ -1416,7 +1416,7 @@ Functional Programming (FP) and Object-Oriented Programming (OOP) are two differ
 - Object-Oriented Programming: OOP is a natural fit for modeling real-world objects and their interactions. It's used in web development for structuring applications, defining classes, and managing state.
 
 
-## 8 desigh patterns
+## Desigh patterns
 - Factory
 - Builder
 - Singleton
@@ -1425,7 +1425,399 @@ Functional Programming (FP) and Object-Oriented Programming (OOP) are two differ
 - Strategy
 - Adapter
 - Facade
-TODO
+
+
+### Overview of javascript design patterns
+
+JavaScript design patterns are reusable solutions to common problems encountered when writing JavaScript code. They help improve code organization, maintainability, and readability. While there are numerous design patterns, here are some of the most important ones in the context of JavaScript:
+
+#### Singleton Pattern:
+Ensures that a class has only one instance and provides a global point of access to that instance. It's commonly used for managing shared resources, such as configuration settings or database connections.
+
+#### Factory Pattern:
+Defines an interface for creating objects but allows subclasses to alter the type of objects that will be created. It abstracts the process of object creation.
+
+#### Builder Pattern:
+Separates the construction of complex objects from their representation. It's useful when you need to create objects with many optional parameters and want to simplify the process.
+
+#### Module Pattern:
+Encapsulates and hides the implementation details of a module while exposing a public API. It helps organize and protect code, preventing global scope pollution.
+
+#### Observer Pattern:
+Defines a one-to-many dependency between objects, where one object (the subject) maintains a list of its dependents (observers) and notifies them of state changes. It's commonly used in event handling and data binding.
+
+#### Decorator Pattern:
+Allows behavior to be added to individual objects, either statically or dynamically, without affecting the behavior of other objects from the same class. It's useful for extending the functionality of objects.
+
+#### Adapter Pattern:
+Allows the interface of an existing class to be used as another interface. It's used to make existing classes work with others without modifying their source code.
+
+#### Proxy Pattern:
+Provides a placeholder for another object to control access to it. It's often used for lazy loading, access control, and monitoring.
+
+#### Command Pattern:
+Encapsulates a request as an object, thereby allowing for parameterization of clients with queues, requests, and operations. It's useful for implementing undo/redo functionality and queuing tasks.
+
+#### MVC (Model-View-Controller) Pattern:
+Separates the concerns of data (Model), presentation (View), and user input (Controller) in an application. It promotes the separation of concerns and maintainability in complex applications.
+
+#### MVVM (Model-View-ViewModel) Pattern:
+Extends the MVC pattern by introducing a ViewModel that binds the View and Model together. It's commonly used in front-end frameworks like Angular and Knockout.js.
+
+#### Dependency Injection (DI) Pattern:
+Involves supplying dependent objects (or services) to a class rather than having the class create them. It enhances code modularity and testability.
+
+#### Promise Pattern:
+Provides a way to work with asynchronous code in a more structured and readable manner. Promises simplify error handling and chaining multiple asynchronous operations.
+
+#### Middleware Pattern:
+Commonly used in server-side JavaScript (e.g., Node.js), it allows you to compose and reuse functions to handle requests and responses in a flexible and modular way.
+
+#### Pub-Sub (Publish-Subscribe) Pattern:
+Similar to the Observer pattern, it facilitates communication between different parts of an application by allowing objects to publish and subscribe to events.
+
+
+### Design pattern code examples
+
+#### Singleton
+
+The Singleton Design Pattern ensures that a class has only one instance and provides a global point of access to that instance. It's commonly used when you want to restrict the instantiation of a class to a single instance, such as managing shared resources or configuration settings. Here's an example of implementing the Singleton pattern in JavaScript:
+
+```javascript
+class Singleton {
+  constructor() {
+    // Check if an instance already exists
+    if (Singleton.instance) {
+      return Singleton.instance;
+    }
+
+    // If no instance exists, create a new one
+    this.data = [];
+    Singleton.instance = this;
+  }
+
+  addData(item) {
+    this.data.push(item);
+  }
+
+  getData() {
+    return this.data;
+  }
+}
+
+// Usage
+const singleton1 = new Singleton();
+singleton1.addData("Item 1");
+
+const singleton2 = new Singleton(); // This will return the same instance as singleton1
+
+console.log(singleton2.getData()); // ["Item 1"]
+
+```
+In this example:
+
+- We define a Singleton class with a constructor. Inside the constructor, we check if an instance of the class already exists (Singleton.instance). If an instance exists, we return that instance; otherwise, we create a new instance.
+- The addData method allows us to add data to the singleton, and the getData method retrieves the stored data.
+- When we create singleton1, it creates a new instance of the Singleton class and adds "Item 1" to its data array.
+-  When we create singleton2, it doesn't create a new instance. Instead, it returns the existing instance created by singleton1. This ensures that both singleton1 and singleton2 refer to the same object.
+
+The Singleton pattern guarantees that there is only one instance of the class throughout the application's lifecycle. It's useful for managing global state, resources, or configuration settings when you want to ensure that there's a single point of control for those resources.
+
+#### Factory
+The Factory Design Pattern is a creational design pattern that provides an interface for creating objects but allows subclasses to alter the type of objects that will be created. It is useful when you need to create objects based on certain conditions or configurations without specifying their exact class. Here's an example of implementing the Factory Design Pattern in JavaScript:
+
+Suppose we are building a shape drawing application, and we want to create different shapes like circles and rectangles.
+
+```javascript
+// Shape interface (or abstract class)
+class Shape {
+  draw() {
+    throw new Error("Subclasses must implement the 'draw' method.");
+  }
+}
+
+// Concrete implementations of Shape
+class Circle extends Shape {
+  draw() {
+    console.log("Drawing a circle");
+  }
+}
+
+class Rectangle extends Shape {
+  draw() {
+    console.log("Drawing a rectangle");
+  }
+}
+
+// Shape Factory
+class ShapeFactory {
+  createShape(shapeType) {
+    switch (shapeType) {
+      case "circle":
+        return new Circle();
+      case "rectangle":
+        return new Rectangle();
+      default:
+        throw new Error("Invalid shape type.");
+    }
+  }
+}
+
+// Client code
+const factory = new ShapeFactory();
+
+const circle = factory.createShape("circle");
+const rectangle = factory.createShape("rectangle");
+
+circle.draw(); // "Drawing a circle"
+rectangle.draw(); // "Drawing a rectangle"
+
+```
+In this example:
+
+- We define a Shape interface (or abstract class) that declares the draw method. This method will be implemented by concrete shape classes.
+- We create two concrete shape classes, Circle and Rectangle, each of which extends the Shape class and provides its own implementation of the draw method.
+- The ShapeFactory class is responsible for creating shape objects based on the provided shapeType. It encapsulates the object creation logic and allows clients to create shapes without knowing the concrete classes.
+- In the client code, we create a ShapeFactory instance and use it to create circle and rectangle objects. The client only needs to specify the shapeType it wants, and the factory handles the creation.
+
+The Factory Design Pattern decouples the client code from the specific classes it creates, making it easier to add new shapes or modify existing ones without affecting the client code. It also promotes code reuse and helps manage object creation in a centralized manner.
+
+#### Builder
+The Builder Design Pattern is a creational design pattern that separates the construction of complex objects from their representation, allowing you to create objects step by step. It's useful when you have a complex object with many optional parameters, and you want to simplify the process of creating instances of that object. Here's an example of implementing the Builder Design Pattern in JavaScript:
+
+Suppose we are building a "Meal" object, which consists of multiple items like a burger, a drink, and a side dish.
+
+```javascript
+// Product: Meal
+class Meal {
+  constructor() {
+    this.items = [];
+  }
+
+  addItem(item) {
+    this.items.push(item);
+  }
+
+  showItems() {
+    for (const item of this.items) {
+      console.log(`Item: ${item.name}, Packing: ${item.packing.pack()}, Price: ${item.price}`);
+    }
+  }
+}
+
+// Abstract builder
+class MealBuilder {
+  prepareMeal() {
+    const meal = new Meal();
+    this.buildBurger(meal);
+    this.buildDrink(meal);
+    this.buildSide(meal);
+    return meal;
+  }
+
+  buildBurger() {}
+  buildDrink() {}
+  buildSide() {}
+}
+
+// Concrete builders
+class VegMealBuilder extends MealBuilder {
+  buildBurger(meal) {
+    meal.addItem(new Item("Veg Burger", 4.5, new Wrapper()));
+  }
+
+  buildDrink(meal) {
+    meal.addItem(new Item("Coke", 2.0, new Bottle()));
+  }
+
+  buildSide(meal) {
+    meal.addItem(new Item("Fries", 2.5, new Wrapper()));
+  }
+}
+
+class NonVegMealBuilder extends MealBuilder {
+  buildBurger(meal) {
+    meal.addItem(new Item("Chicken Burger", 5.5, new Wrapper()));
+  }
+
+  buildDrink(meal) {
+    meal.addItem(new Item("Pepsi", 2.0, new Bottle()));
+  }
+
+  buildSide(meal) {
+    meal.addItem(new Item("Onion Rings", 3.0, new Box()));
+  }
+}
+
+// Product: Item
+class Item {
+  constructor(name, price, packing) {
+    this.name = name;
+    this.price = price;
+    this.packing = packing;
+  }
+}
+
+// Product: Packing
+class Packing {
+  pack() {
+    throw new Error("This method should be overridden by subclasses.");
+  }
+}
+
+class Wrapper extends Packing {
+  pack() {
+    return "Wrapper";
+  }
+}
+
+class Bottle extends Packing {
+  pack() {
+    return "Bottle";
+  }
+}
+
+class Box extends Packing {
+  pack() {
+    return "Box";
+  }
+}
+
+// Client code
+const vegMealBuilder = new VegMealBuilder();
+const nonVegMealBuilder = new NonVegMealBuilder();
+
+const vegMeal = vegMealBuilder.prepareMeal();
+const nonVegMeal = nonVegMealBuilder.prepareMeal();
+
+console.log("Veg Meal:");
+vegMeal.showItems();
+
+console.log("\nNon-Veg Meal:");
+nonVegMeal.showItems();
+
+```
+In this example:
+
+- We have a Meal class, which is the product we want to build. It has methods to add items to the meal and display the items.
+- There's an abstract MealBuilder class, which defines the steps for constructing a meal. It includes methods for building a burger, a drink, and a side dish. These methods are empty in the abstract class but will be implemented in concrete builders.
+- We have two concrete builder classes, VegMealBuilder and NonVegMealBuilder, each of which extends MealBuilder and implements the specific steps for constructing their respective meals.
+- The Item class represents individual items that can be part of a meal, including their name, price, and packing (e.g., wrapper, bottle).
+- The Packing class is an abstract class for packing items, with Wrapper, Bottle, and Box as concrete packing classes.
+- In the client code, we create instances of VegMealBuilder and NonVegMealBuilder, and we use them to prepare meals step by step. Finally, we display the contents of each meal.
+
+The Builder Design Pattern allows you to construct complex objects in a clear and step-by-step manner while keeping the construction logic separate from the product itself. It's particularly useful when dealing with objects with many optional parameters or configurations.
+
+
+### Observer
+
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects, where one object (the subject) maintains a list of its dependents (observers) and notifies them of state changes. It's commonly used in JavaScript for implementing event handling, data binding, and UI updates. Here's an example of implementing the Observer pattern in JavaScript:
+
+```javascript
+// Observer interface or abstract class
+class Observer {
+  update() {
+    throw new Error("This method must be overridden by concrete observers.");
+  }
+}
+
+// Concrete Observers
+class ConcreteObserverA extends Observer {
+  constructor() {
+    super();
+    this.state = null;
+  }
+
+  update(newState) {
+    this.state = newState;
+    console.log(`Observer A has been updated with state: ${this.state}`);
+  }
+}
+
+class ConcreteObserverB extends Observer {
+  constructor() {
+    super();
+    this.data = null;
+  }
+
+  update(newData) {
+    this.data = newData;
+    console.log(`Observer B has received new data: ${this.data}`);
+  }
+}
+
+// Subject (Observable)
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  addObserver(observer) {
+    this.observers.push(observer);
+  }
+
+  removeObserver(observer) {
+    const index = this.observers.indexOf(observer);
+    if (index !== -1) {
+      this.observers.splice(index, 1);
+    }
+  }
+
+  notifyObservers() {
+    for (const observer of this.observers) {
+      observer.update(this.getState()); // Notify each observer with the subject's state
+    }
+  }
+
+  getState() {
+    throw new Error("This method must be overridden by concrete subjects.");
+  }
+}
+
+// Concrete Subject
+class ConcreteSubject extends Subject {
+  constructor() {
+    super();
+    this.state = null;
+  }
+
+  setState(newState) {
+    this.state = newState;
+    this.notifyObservers(); // Notify observers when the state changes
+  }
+
+  getState() {
+    return this.state;
+  }
+}
+
+// Usage
+const observerA = new ConcreteObserverA();
+const observerB = new ConcreteObserverB();
+
+const subject = new ConcreteSubject();
+subject.addObserver(observerA);
+subject.addObserver(observerB);
+
+subject.setState("New State 1");
+// Output:
+// Observer A has been updated with state: New State 1
+// Observer B has received new data: New State 1
+
+subject.removeObserver(observerA);
+
+subject.setState("New State 2");
+// Output:
+// Observer B has received new data: New State 2
+
+```
+- We have an abstract Observer class that defines the update method. Concrete observer classes (ConcreteObserverA and ConcreteObserverB) inherit from this class and implement their specific update logic.
+- The Subject class represents the observable object that maintains a list of observers (observers). It provides methods to add, remove, and notify observers.
+- The ConcreteSubject class extends the Subject class and defines the specific state that observers are interested in. When its state changes (via the setState method), it notifies all registered observers by calling their update methods.
+- In the usage section, we create concrete observers (observerA and observerB) and a concrete subject (subject). We add the observers to the subject, and when the subject's state changes, it notifies the observers.
+
+The Observer pattern decouples the subject (observable) from its observers, allowing for flexible and reusable code. Observers can react to changes in the subject's state without needing to know the details of each other. This pattern is widely used in JavaScript for implementing event handling in libraries like Node.js EventEmitter and frameworks like Angular.
+
 
 
 ## 20 System design concepts
