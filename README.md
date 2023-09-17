@@ -312,3 +312,100 @@ The output will be a 2D array representing the level order traversal:
 
 ```
 This output indicates that the nodes at each level of the binary tree have been traversed in order.
+
+
+
+## DFS (Depth first search)
+
+Depth-First Search (DFS) is a traversal algorithm used to explore or search through data structures, such as trees and graphs, by going as deeply as possible along each branch before backtracking. In the context of trees, DFS starts at the root and explores as far down one branch as possible before backtracking to explore other branches. There are two main variants of DFS: pre-order and post-order traversal.
+
+
+In pre-order DFS, you visit the current node before visiting its children. In post-order DFS, you visit the children before visiting the current node.
+
+Here's a high-level explanation of how pre-order DFS works:
+- Start at the root node (or the starting point in a graph).
+- Visit the current node.
+- Recursively apply the DFS algorithm to each unvisited child node.
+- Backtrack to the parent node and repeat steps 2-3 for other unvisited children.
+
+DFS can be implemented using recursion or an explicit stack data structure. In JavaScript, recursion is often used for its simplicity.
+
+Now, let's solve the "Sum of Distances in Tree" problem on LeetCode using DFS:
+
+Problem: Sum of Distances in Tree
+
+You are given an undirected tree with n nodes labeled from 0 to n - 1 and an array edges, where edges[i] = [a, b] indicates that there is an edge between nodes a and b in the tree. Return an array ans of length n where ans[i] is the sum of the distances between the ith node in the tree and all other nodes.
+
+Here's a JavaScript solution using DFS:
+
+```javascript
+function sumOfDistancesInTree(n, edges) {
+  const tree = new Map(); // Create an adjacency list to represent the tree
+  const count = Array(n).fill(1); // To keep track of the number of nodes in each subtree
+  const ans = Array(n).fill(0); // To store the sum of distances for each node
+
+  // Create the adjacency list
+  for (const [u, v] of edges) {
+    if (!tree.has(u)) tree.set(u, []);
+    if (!tree.has(v)) tree.set(v, []);
+    tree.get(u).push(v);
+    tree.get(v).push(u);
+  }
+
+  // DFS to calculate count and ans
+  function dfs(node, parent) {
+    for (const child of tree.get(node)) {
+      if (child !== parent) {
+        dfs(child, node);
+        count[node] += count[child];
+        ans[node] += ans[child] + count[child];
+      }
+    }
+  }
+
+  // DFS to update ans for all nodes
+  function dfsUpdate(node, parent) {
+    for (const child of tree.get(node)) {
+      if (child !== parent) {
+        ans[child] = ans[node] - count[child] + (n - count[child]);
+        dfsUpdate(child, node);
+      }
+    }
+  }
+
+  dfs(0, -1); // Start DFS from the root (node 0)
+  dfsUpdate(0, -1);
+
+  return ans;
+}
+
+```
+
+Explanation:
+- We start by creating an adjacency list tree to represent the tree, where each node maps to its neighboring nodes. We also initialize two arrays: count to keep track of the number of nodes in each subtree and ans to store the sum of distances for each node.
+- We iterate through the edges array and build the adjacency list.
+- We define two DFS functions: dfs and dfsUpdate.
+- The dfs function calculates the count and ans arrays for each node by recursively visiting all its children. It uses a parent parameter to avoid revisiting the parent node.
+- The dfsUpdate function updates the ans array for all nodes based on the results obtained in the first DFS traversal.
+- We start the DFS traversal from the root node (node 0) by calling dfs(0, -1).
+- After the DFS traversal, we call dfsUpdate(0, -1) to update the ans array for all nodes.
+- Finally, we return the ans array, which contains the sum of distances for each node.
+
+Here's an example of how to use this function:
+
+```javascript
+const n = 6;
+const edges = [[0, 1], [0, 2], [2, 3], [2, 4], [2, 5]];
+
+const result = sumOfDistancesInTree(n, edges);
+console.log(result);
+```
+The output will be an array containing the sum of distances for each node:
+
+```javascript
+[8, 12, 6, 10, 10, 10]
+
+```
+This output represents the sum of distances between each node and all other nodes in the tree.
+
+
