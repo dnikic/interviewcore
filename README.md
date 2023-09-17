@@ -942,7 +942,196 @@ function bubbleSort(arr) {
 ````
 
 ## Object oriented principles (OOP)
-  TODO
+
+Object-Oriented Programming (OOP) is a programming paradigm that revolves around the concept of objects, which are instances of classes. OOP principles help in designing, structuring, and organizing code to make it more modular, maintainable, and reusable.
+
+- Class and Object
+- Encapsulation
+- Inheritance
+- Polymorphism
+- Abstraction
+
+Here are the main OOP principles and examples in JavaScript:
+
+### Class and Object
+
+- Class: A class is a blueprint or template for creating objects. It defines the structure and behavior that the objects will have.
+- Object: An object is an instance of a class. It encapsulates data (attributes) and behavior (methods).
+
+
+```javascript
+// Class definition
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+
+// Object creation
+const person1 = new Person("Alice", 30);
+const person2 = new Person("Bob", 25);
+
+// Accessing object properties and methods
+console.log(person1.name); // "Alice"
+person2.greet(); // "Hello, my name is Bob and I am 25 years old."
+
+```
+
+### Encapsulation
+
+Encapsulation refers to the practice of bundling data (attributes) and methods (functions) that operate on that data within a single unit, i.e., a class. It hides the internal details of an object and exposes only what is necessary.
+
+```javascript
+class BankAccount {
+  constructor(accountNumber, balance) {
+    this.accountNumber = accountNumber;
+    this.balance = balance;
+  }
+
+  deposit(amount) {
+    if (amount > 0) {
+      this.balance += amount;
+    }
+  }
+
+  withdraw(amount) {
+    if (amount > 0 && amount <= this.balance) {
+      this.balance -= amount;
+    }
+  }
+
+  getBalance() {
+    return this.balance;
+  }
+}
+
+
+```
+### Inheritance
+nheritance allows a class (subclass or derived class) to inherit properties and methods from another class (superclass or base class). It promotes code reuse and hierarchy.
+
+
+```javascript
+// Base class
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a sound.`);
+  }
+}
+
+// Derived class inheriting from Animal
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name); // Call the constructor of the base class
+    this.breed = breed;
+  }
+
+  speak() {
+    console.log(`${this.name} barks.`);
+  }
+}
+
+const dog = new Dog("Buddy", "Golden Retriever");
+dog.speak(); // "Buddy barks."
+
+
+```
+### Polymorphism:
+
+Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables dynamic method dispatch and flexibility.
+
+```javascript
+class Shape {
+  area() {
+    return 0;
+  }
+}
+
+class Circle extends Shape {
+  constructor(radius) {
+    super();
+    this.radius = radius;
+  }
+
+  area() {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(width, height) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  area() {
+    return this.width * this.height;
+  }
+}
+
+function printArea(shape) {
+  console.log(`Area: ${shape.area()}`);
+}
+
+const circle = new Circle(5);
+const rectangle = new Rectangle(4, 6);
+
+printArea(circle); // "Area: 78.53981633974483"
+printArea(rectangle); // "Area: 24"
+
+```
+
+### Abstraction
+
+Abstraction is the process of simplifying complex reality by modeling classes based on the essential properties and behaviors relevant to a specific problem domain. It hides unnecessary details.
+
+```javascript
+class Vehicle {
+  constructor(make, model) {
+    this.make = make;
+    this.model = model;
+  }
+
+  // An abstract method that must be implemented by derived classes
+  start() {
+    throw new Error("Start method must be implemented.");
+  }
+}
+
+class Car extends Vehicle {
+  start() {
+    console.log(`Starting the ${this.make} ${this.model} car.`);
+  }
+}
+
+class Motorcycle extends Vehicle {
+  start() {
+    console.log(`Starting the ${this.make} ${this.model} motorcycle.`);
+  }
+}
+
+const car = new Car("Toyota", "Camry");
+const bike = new Motorcycle("Honda", "CBR500R");
+
+car.start(); // "Starting the Toyota Camry car."
+bike.start(); // "Starting the Honda CBR500R motorcycle."
+
+
+```
+
+
+
+
 
 ## SOLID principles in javascript
 
