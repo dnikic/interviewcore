@@ -578,3 +578,127 @@ console.log(length); // Output: 3 (The longest substring without repeating chara
 In this example, the input string "abcabcbb" has the longest substring without repeating characters as "abc," which has a length of 3, so the function returns 3.
 
 
+## Heap
+
+A heap is a specialized tree-based data structure that satisfies the heap property. In a max heap, for example, every parent node has a value greater than or equal to the values of its children nodes. Conversely, in a min heap, every parent node has a value less than or equal to the values of its children nodes. Heaps are often used to efficiently find and remove the maximum (in a max heap) or minimum (in a min heap) element from a collection.
+
+In JavaScript, you can implement a heap using an array. The root of the heap is typically the first element (index 0) in the array. The parent-child relationships are defined by the indices. For a node at index i, its left child is at index 2i + 1, and its right child is at index 2i + 2. Conversely, for a child node at index j, its parent is at index (j - 1) / 2.
+
+Here's a basic example of a max heap implemented as an array:
+
+```javascript
+const maxHeap = [10, 7, 5, 3, 6, 1, 4];
+
+```
+
+In this max heap, the root (index 0) contains the maximum element, which is 10, and each parent node has a value greater than or equal to its children nodes.
+
+Now, let's use a max heap to solve the "Kth Largest Element in an Array" problem:
+
+Problem: Kth Largest Element in an Array
+
+Given an integer array nums and an integer k, return the kth largest element in the array.
+
+Here's a JavaScript solution using a max heap:
+
+```javascript
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+    this.size = 0;
+  }
+
+  insert(val) {
+    this.heap.push(val);
+    this.size++;
+    this.heapifyUp();
+  }
+
+  extractMax() {
+    if (this.size === 0) {
+      return null;
+    }
+    if (this.size === 1) {
+      this.size--;
+      return this.heap.pop();
+    }
+
+    const max = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.size--;
+    this.heapifyDown();
+    return max;
+  }
+
+  heapifyUp() {
+    let currentIdx = this.size - 1;
+    while (currentIdx > 0) {
+      const parentIdx = Math.floor((currentIdx - 1) / 2);
+      if (this.heap[currentIdx] > this.heap[parentIdx]) {
+        [this.heap[currentIdx], this.heap[parentIdx]] = [this.heap[parentIdx], this.heap[currentIdx]];
+        currentIdx = parentIdx;
+      } else {
+        break;
+      }
+    }
+  }
+
+  heapifyDown() {
+    let currentIdx = 0;
+    while (true) {
+      const leftChildIdx = 2 * currentIdx + 1;
+      const rightChildIdx = 2 * currentIdx + 2;
+      let maxChildIdx = null;
+
+      if (leftChildIdx < this.size) {
+        maxChildIdx = leftChildIdx;
+        if (rightChildIdx < this.size && this.heap[rightChildIdx] > this.heap[leftChildIdx]) {
+          maxChildIdx = rightChildIdx;
+        }
+      }
+
+      if (maxChildIdx === null || this.heap[currentIdx] >= this.heap[maxChildIdx]) {
+        break;
+      }
+
+      [this.heap[currentIdx], this.heap[maxChildIdx]] = [this.heap[maxChildIdx], this.heap[currentIdx]];
+      currentIdx = maxChildIdx;
+    }
+  }
+}
+
+function findKthLargest(nums, k) {
+  const maxHeap = new MaxHeap();
+
+  for (const num of nums) {
+    maxHeap.insert(num);
+    if (maxHeap.size > k) {
+      maxHeap.extractMax();
+    }
+  }
+
+  return maxHeap.extractMax();
+}
+
+```
+
+Explanation:
+
+- We define a MaxHeap class that implements the max heap data structure. It provides methods for inserting elements (insert), extracting the maximum element (extractMax), and maintaining the heap property (heapifyUp and heapifyDown).
+- The findKthLargest function initializes a max heap and inserts elements from the nums array one by one. If the heap size exceeds k, we extract the maximum element to maintain a heap of size k. Eventually, the kth largest element will be at the root of the max heap.
+- We return the maximum element in the max heap, which is the kth largest element in the nums array.
+
+  Here's an example of how to use this function:
+  
+```javascript
+
+const nums = [3, 2, 1, 5, 6, 4];
+const k = 2;
+const kthLargest = findKthLargest(nums, k);
+console.log(kthLargest); // Output: 5 (The 2nd largest element in the array is 5)
+
+
+```
+
+In this example, we find the 2nd largest element in the nums array, which is 5.
+
