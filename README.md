@@ -13,6 +13,8 @@ Bing question:
 OpenAi question:
 - Explain recursion in javascript and show an explained example of its ussagee to solve the reverse linked list letcode problem.
 
+Explain how to determine O complexity and give an explained example of an algorith analisys 
+
 ## Overview
 
 6 coding interview concepts
@@ -24,6 +26,8 @@ OpenAi question:
 - Sliding window
 - Heap
 - Quick sort and difference between sorting algorithms (when to use which)
+
+O complexity
 
 20 System design concepts
 - see the youtube videofrom NetCode
@@ -37,6 +41,8 @@ OpenAi question:
 - Strategy
 - Adapter
 - Facade
+
+
 
 SOLID principles from interviewbit
 
@@ -408,4 +414,91 @@ The output will be an array containing the sum of distances for each node:
 ```
 This output represents the sum of distances between each node and all other nodes in the tree.
 
+## Binary search
 
+Binary search is a search algorithm used to find a specific target value within a sorted collection, such as an array. It operates by repeatedly dividing the search interval in half until the target value is found or it's determined that the value doesn't exist in the collection. Binary search is efficient and typically much faster than linear search for large sorted datasets.
+
+Here's the basic idea behind binary search:
+- Start with the entire sorted collection.
+- Calculate the midpoint of the current interval.
+- Compare the target value with the value at the midpoint.
+  - If the target is equal to the midpoint value, the search is successful, and you've found the target.
+  - If the target is less than the midpoint value, update the search interval to the left half of the current interval and repeat the process.
+  - If the target is greater than the midpoint value, update the search interval to the right half of the current interval and repeat the process.
+- Repeat steps 2-3 until the target is found or the search interval becomes empty.
+
+  Binary search can be implemented using a loop or recursion, and it has a time complexity of O(log n), making it very efficient for large datasets.
+
+Now, let's see how binary search can be used to solve the "Find Median Sorted Arrays" problem on LeetCode:
+
+Problem: Find Median Sorted Arrays
+
+Given two sorted arrays nums1 and nums2 of size m and n respectively, find the median of the two sorted arrays.
+
+Here's a JavaScript solution using binary search:
+
+```javascript
+function findMedianSortedArrays(nums1, nums2) {
+  // Ensure nums1 is the smaller array or of equal size
+  if (nums1.length > nums2.length) {
+    [nums1, nums2] = [nums2, nums1];
+  }
+
+  const m = nums1.length;
+  const n = nums2.length;
+  const halfLen = Math.floor((m + n + 1) / 2);
+
+  let left = 0;
+  let right = m;
+
+  while (left <= right) {
+    const partitionX = Math.floor((left + right) / 2);
+    const partitionY = halfLen - partitionX;
+
+    const maxX = partitionX === 0 ? Number.NEGATIVE_INFINITY : nums1[partitionX - 1];
+    const maxY = partitionY === 0 ? Number.NEGATIVE_INFINITY : nums2[partitionY - 1];
+
+    const minX = partitionX === m ? Number.POSITIVE_INFINITY : nums1[partitionX];
+    const minY = partitionY === n ? Number.POSITIVE_INFINITY : nums2[partitionY];
+
+    if (maxX <= minY && maxY <= minX) {
+      if ((m + n) % 2 === 0) {
+        return (Math.max(maxX, maxY) + Math.min(minX, minY)) / 2;
+      } else {
+        return Math.max(maxX, maxY);
+      }
+    } else if (maxX > minY) {
+      right = partitionX - 1;
+    } else {
+      left = partitionX + 1;
+    }
+  }
+
+  throw new Error("Input arrays are not sorted.");
+}
+
+```
+
+Explanation:
+
+- To find the median of two sorted arrays, we ensure that nums1 is the smaller array (or of equal size) by swapping them if necessary. This simplifies the binary search implementation.
+- We calculate the length of the combined arrays (m + n) and the half length (halfLen). The half length represents the index where the median(s) would be if the arrays were merged.
+- We initialize two pointers, left and right, for binary search. left starts at 0, and right starts at the length of nums1.
+- In the binary search loop, we calculate partitionX as the midpoint between left and right. partitionY is calculated based on halfLen and partitionX.
+- We then calculate the maximum and minimum values on the left (maxX and minX) and right (maxY and minY) sides of the partitions.
+- We compare these values to determine if we have found the correct partitions. If maxX <= minY and maxY <= minX, it means we have found the correct partitions, and we can compute the median accordingly.
+- If maxX is greater than minY, we need to move partitionX to the left to reduce maxX. If maxY is greater than minX, we need to move partitionX to the right to increase maxY.
+- We repeat the binary search until we find the correct partitions that satisfy the conditions for finding the median.
+- If the loop finishes without finding the correct partitions, it means the input arrays are not sorted, so we throw an error.
+
+Here's an example of how to use this function:
+
+```javascript
+const nums1 = [1, 3];
+const nums2 = [2];
+
+const median = findMedianSortedArrays(nums1, nums2);
+console.log(median); // Output: 2.0
+
+```
+In this example, we find the median of the sorted arrays [1, 3] and [2], which is 2.0.
