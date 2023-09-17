@@ -30,9 +30,11 @@ Algorithm complexity
 - Quick sort and difference between sorting algorithms (when to use which)
 
 
+OOP in javasscript
 
-20 System design concepts
-- see the youtube videofrom NetCode
+SOLID principles from interviewbit
+
+OOP vs Functional javascript principles
 
 8 desigh patterns
 - Factory
@@ -44,11 +46,9 @@ Algorithm complexity
 - Adapter
 - Facade
 
+20 System design concepts
+- see the youtube videofrom NetCode
 
-
-SOLID principles from interviewbit
-
-OOP from interviewbit
 
 ## Algorith complexity
 
@@ -940,4 +940,396 @@ function bubbleSort(arr) {
 }
 
 ````
+
+## Object oriented principles (OOP)
+  TODO
+
+## SOLID principles in javascript
+
+The SOLID principles are a set of five design principles in object-oriented programming that aim to create more maintainable, flexible, and understandable software. These principles were introduced by Robert C. Martin and are often used as guidelines for writing clean and maintainable code. 
+
+- 1. Single Responsibility Principle (SRP)
+- 2. Open/Closed Principle (OCP)
+- 3. Liskov Substitution Principle (LSP)
+- 4. Interface Segregation Principle (ISP)
+- 5. Dependency Inversion Principle (DIP)
+
+
+Let's explore each of the SOLID principles using JavaScript examples:
+
+### 1. Single Responsibility Principle (SRP):
+
+This principle states that a class should have only one reason to change, meaning it should have only one responsibility or job.
+
+Example in JavaScript:
+
+```javascript
+
+// Not following SRP
+class Employee {
+  constructor(name, salary) {
+    this.name = name;
+    this.salary = salary;
+  }
+
+  calculateSalary() {
+    // Calculate employee's salary
+  }
+
+  saveToDatabase() {
+    // Save employee data to the database
+  }
+}
+
+// Following SRP
+class Employee {
+  constructor(name, salary) {
+    this.name = name;
+    this.salary = salary;
+  }
+
+  calculateSalary() {
+    // Calculate employee's salary
+  }
+}
+
+class DatabaseHandler {
+  saveToDatabase(employee) {
+    // Save employee data to the database
+  }
+}
+
+
+```
+
+### 2. Open/Closed Principle (OCP):
+
+This principle suggests that software entities (e.g., classes, modules, functions) should be open for extension but closed for modification. In other words, you should be able to add new functionality without changing existing code.
+
+Example in JavaScript:
+
+```javascript
+// Not following OCP
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+}
+
+class AreaCalculator {
+  calculateArea(rectangle) {
+    return rectangle.width * rectangle.height;
+  }
+}
+
+// To add support for circles, you'd have to modify AreaCalculator.
+
+
+```
+
+```javascript
+// Following OCP
+class Shape {
+  area() {}
+}
+
+class Rectangle extends Shape {
+  constructor(width, height) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  area() {
+    return this.width * this.height;
+  }
+}
+
+class Circle extends Shape {
+  constructor(radius) {
+    super();
+    this.radius = radius;
+  }
+
+  area() {
+    return Math.PI * this.radius ** 2;
+  }
+}
+
+
+```
+### 3. Liskov Substitution Principle (LSP):
+
+This principle states that objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+
+Example in JavaScript:
+
+```javascript
+// Not following LSP
+class Bird {
+  fly() {}
+}
+
+class Ostrich extends Bird {
+  // Ostriches can't fly, so this method is inappropriate.
+  fly() {
+    throw new Error("Ostriches can't fly");
+  }
+}
+
+// Following LSP
+class Bird {
+  move() {}
+}
+
+class Sparrow extends Bird {
+  move() {
+    // Implement flying behavior
+  }
+}
+
+class Ostrich extends Bird {
+  move() {
+    // Implement walking behavior
+  }
+}
+
+
+```
+### 4 Interface Segregation Principle (ISP):
+This principle suggests that a class should not be forced to implement interfaces it doesn't use. It encourages the creation of smaller, more focused interfaces.
+
+Example in JavaScript:
+
+```javascript
+// Not following ISP
+class Worker {
+  work() {}
+  eat() {}
+}
+
+// A manager doesn't need to implement the "work" method.
+class Manager extends Worker {
+  eat() {}
+}
+
+// Following ISP
+class Workable {
+  work() {}
+}
+
+class Eatable {
+  eat() {}
+}
+
+class Worker implements Workable, Eatable {
+  work() {
+    // Implement work behavior
+  }
+
+  eat() {
+    // Implement eat behavior
+  }
+}
+
+class Manager implements Eatable {
+  eat() {
+    // Implement eat behavior
+  }
+}
+
+
+```
+### 5.Dependency Inversion Principle (DIP):
+
+This principle states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Additionally, abstractions should not depend on details; details should depend on abstractions.
+
+Example in JavaScript:
+
+```javascript
+// Not following DIP
+class LightBulb {
+  turnOn() {}
+  turnOff() {}
+}
+
+class Switch {
+  constructor(bulb) {
+    this.bulb = bulb;
+  }
+
+  operate() {
+    // Operate the bulb
+  }
+}
+
+// Following DIP
+class Switchable {
+  turnOn() {}
+  turnOff() {}
+}
+
+class LightBulb implements Switchable {
+  turnOn() {
+    // Implement turning on behavior
+  }
+
+  turnOff() {
+    // Implement turning off behavior
+  }
+}
+
+class Switch {
+  constructor(device) {
+    this.device = device;
+  }
+
+  operate() {
+    this.device.turnOn();
+    this.device.turnOff();
+  }
+}
+
+
+```
+
+
+
+
+
+## 8 desigh patterns
+- Factory
+- Builder
+- Singleton
+- Observer
+- Iterator
+- Strategy
+- Adapter
+- Facade
+TODO
+
+
+## 20 System design concepts
+
+Watch: [20 System Design Concepts Explained in 10 Minutes by NetCode](https://www.youtube.com/watch?v=i53Gi_K3o7I)
+
+- Vertical Scaling
+- Horizontal Scaling
+- Load Balancers
+- Content Delivery Networks
+- Caching
+- IP Address
+- TCP / IP
+- IP Address
+- Domain Name System
+- HTTP
+- REST
+- GraphQL
+- gRPC
+- WebSockets
+- SQL
+- ACID
+- NoSQL
+- Sharding
+- Replication
+- CAP Theorem
+- Message Queues
+
+### Using Software developers System Design knowledge write a system design for creating Word Online as a softwaree as a service?
+
+
+1. Frontend (Client-Side):
+   - Web Application: Built using modern JavaScript frameworks like React.js or Vue.js. This will be the user interface where users can create, edit, and view documents.
+   - Real-Time Updates: Use WebSockets for real-time updates and collaboration between multiple users on the same document.
+   - Offline Support: Implement Service Workers for offline support and document editing.
+
+2. Backend (Server-Side):
+   - RESTful API: Develop a RESTful API using Node.js/Express.js or Django/Flask for handling client requests.
+   - Authentication & Authorization: Implement OAuth for user authentication and JWT (JSON Web Tokens) for secure information exchange.
+   - Real-Time Collaboration: Use Operational Transformation or Conflict-free Replicated Data Types (CRDTs) algorithms to handle real-time collaboration.
+
+3. Database:
+   - Document Storage: Store the documents in a NoSQL database like MongoDB or CouchDB due to their flexible schema and scalability.
+   - User Data: Store user data in a SQL database like PostgreSQL or MySQL.
+
+4. Storage:
+   - Use cloud storage services like AWS S3 or Azure Blob Storage for storing media files, document exports, etc.
+
+5. Search:
+   - Implement ElasticSearch for providing efficient full-text search functionality across documents.
+
+6. Microservices:
+   - Consider a microservices architecture for independent scaling of different functionalities like user management, document management, collaboration service, etc.
+
+7. Deployment & Scaling:
+   - Use Docker for containerization and Kubernetes for orchestration to ensure the application is scalable and resilient.
+   - Deploy the application on a cloud platform like AWS, Google Cloud, or Azure.
+
+8. Security:
+   - Ensure all data is encrypted at rest and in transit.
+   - Regularly update and patch systems to protect against known vulnerabilities.
+
+
+### How would you design a distributed cache?
+
+1. **Cache Nodes:**
+   - The cache is divided into multiple nodes, each responsible for storing a portion of the cache data.
+   - Each node can be a separate machine or process.
+
+2. **Data Distribution:**
+   - Use consistent hashing to distribute data across different nodes. This minimizes re-distribution of data when nodes are added or removed.
+
+3. **Data Replication:**
+   - To ensure high availability and fault tolerance, replicate each data item on multiple cache nodes.
+   - Use strategies like Read-Repair or Anti-Entropy to keep the replicas synchronized.
+
+4. **Cache Eviction Policy:**
+   - Implement an eviction policy like LRU (Least Recently Used) or LFU (Least Frequently Used) to decide which items to remove when the cache is full.
+
+5. **Cache Coherency:**
+   - If the cache is a write-through cache, ensure that writes to the cache are immediately written to the backing store.
+   - If the cache is a write-back cache, use a strategy like periodic write-back or write-back on eviction.
+
+6. **Partition Tolerance:**
+   - The system should be able to function even if some of the nodes are down or slow. This can be achieved by using techniques like consistent hashing and data replication.
+
+7. **Concurrency Control:**
+   - Use locks or optimistic concurrency control mechanisms to handle concurrent reads and writes to the same data item.
+
+8. **Monitoring and Auto-Recovery:**
+   - Monitor the health of cache nodes and implement auto-recovery mechanisms to handle node failures.
+
+### Using Software developers System Design knowledge write a system design for creating a tic tac toe game?
+
+1. **Game Logic:**
+   - Implement the game logic using a 3x3 matrix to represent the game board. Each cell in the matrix can be empty, 'X', or 'O'.
+   - The game starts with an empty board and the 'X' player.
+   - Players take turns to place their symbol ('X' or 'O') in an empty cell.
+   - The game ends when one player has three of their symbols in a row, column, or diagonal, or when all cells are filled (draw).
+
+2. **User Interface (UI):**
+   - Create a simple UI using HTML/CSS/JavaScript to display the game board and get user inputs.
+   - The UI should update in real-time as players make their moves.
+
+3. **Backend Server:**
+   - If it's a multiplayer game over the network, you'll need a backend server.
+   - The server can be implemented using Node.js/Express.js or other backend technologies.
+   - The server receives move updates from each client and broadcasts them to all other clients.
+
+4. **Networking:**
+   - Use WebSockets for real-time bidirectional communication between the clients and the server.
+
+5. **Game State Management:**
+   - The game state includes the current board state and the next player.
+   - In a single-player game, this can be managed on the client-side.
+   - In a multiplayer networked game, this can be managed on the server-side and synchronized with all clients.
+
+6. **AI Player (Optional):**
+   - If it's a single-player game against the computer, implement an AI player.
+   - The AI can be as simple as choosing random empty cells, or as complex as using Minimax algorithm for perfect play.
+
+7. **Testing:**
+   - Unit tests should be written to test the game logic.
+
 
